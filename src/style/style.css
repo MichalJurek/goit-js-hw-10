@@ -59,12 +59,17 @@ img {
     line-height: 150%;
 }
 
+.cat-desc-title {
+    text-shadow: 2px 0px 7px rgba(42, 117, 209, 0.58);
+}
+
 .cat-info {
     margin-top: 30px;
     display: flex;
     flex-direction: column;
     gap: 15px;
     text-align: justify;
+    color: rgb(26, 26, 26);
 }
 
 @media screen and (min-width: 768px) {
