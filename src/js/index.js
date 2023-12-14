@@ -13,7 +13,9 @@ breedSelect.addEventListener('change', onChangeSelect);
 fetchAndRenderBreeds();
 
 function fetchAndRenderBreeds() {
+  breedSelect.classList.add('unvisible');
   loader.classList.remove('unvisible');
+
   fetchBreeds()
     .then(breeds => renderBreedSelect(breeds))
     .catch(error => {
@@ -23,13 +25,11 @@ function fetchAndRenderBreeds() {
         {
           position: 'center-top',
           distance: '20px',
-          background: '#FF3D00',
         }
       );
     })
     .finally(() => {
       loader.classList.add('unvisible');
-      breedSelect.classList.remove('unvisible');
     });
 }
 
