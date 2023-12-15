@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Notiflix from 'notiflix';
 import { fetchBreeds, fetchCatByBreed } from './cat-api.js';
 import SlimSelect from 'slim-select';
@@ -13,15 +14,14 @@ breedSelect.addEventListener('change', onChangeSelect);
 fetchAndRenderBreeds();
 
 function fetchAndRenderBreeds() {
-  breedSelect.classList.add('unvisible');
   loader.classList.remove('unvisible');
 
   fetchBreeds()
     .then(breeds => renderBreedSelect(breeds))
     .catch(error => {
-      console.log(error);
+      console.error(error);
       Notiflix.Notify.failure(
-        'Oops! Something went wrong! Try reloading the page!',
+        `Oops! Failed to fetch breeds. Error: ${error.message}`,
         {
           position: 'center-top',
           distance: '20px',
@@ -42,9 +42,9 @@ function onChangeSelect(event) {
   fetchCatByBreed(breedId)
     .then(breed => renderBreedDesc(breed))
     .catch(error => {
-      console.log(error);
+      console.error(error);
       Notiflix.Notify.failure(
-        'Oops! Something went wrong! Try reloading the page!'
+        `Oops! Failed to fetch cat by breed. Error: ${error.message}`
       );
     })
     .finally(() => loader.classList.add('unvisible'));
@@ -61,7 +61,10 @@ function renderBreedSelect(breeds) {
   new SlimSelect({
     select: '#single',
   });
+
+  breedSelect.classList.add('unvisible'); // Przenieś to tutaj
 }
+
 function renderBreedDesc(breed) {
   const markupImg = `<img class="cat-img" src="${breed.url}" alt="${breed.id}">`;
   const markupDesc = `<h2 class="cat-desc-title">${breed.breeds[0].name}</h2>
